@@ -8,7 +8,7 @@
 
     </head>
     <body>
-        <h1>Welcome</h1>
-        <p>This is development page for CES.</p>
+        <h1>Class</h1>
+        <p>This is class main page.</p>
     </body>
 </html>
