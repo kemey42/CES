@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
+<div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
@@ -11,8 +10,15 @@
                         <div class="col-md-6">
                             <h3>Announcement</h3>
                             <hr />
-                            <h4>Monday, 18th March 2019</h4>
-                            <p>Welcome to Coaching Engagement System for Oil and Gas Master</p>
+
+                            @if($announcement)
+                            {!! $announcement->message !!}
+                            <br/>
+                            <p>Announcement Date: {{$announcement->updated_at->format('d M Y')}}</p>
+                            @else
+                            <p>No new announcement</p>
+                            @endif
+
                         </div>
 
                         <div class="col-md-6">
@@ -89,5 +95,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection 

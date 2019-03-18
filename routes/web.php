@@ -1,5 +1,7 @@
 <?php
 
+use App\Announcement;
+
 Auth::routes();
 
 /*
@@ -14,7 +16,8 @@ Auth::routes();
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $announcement = Announcement::find(1);
+    return view('welcome')->with('announcement', $announcement);
 });
 
 
@@ -33,3 +36,10 @@ Route::get('/coach/{id}/{name}', 'CoachesController@student');
 Route::get('/class', 'ClassesController@index');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//route to setup landing page announcement
+Route::resource('Announcement', 'AnnouncementsController')->only([
+    'edit', 'update'
+]);;
+
+//return view('coach.main');
