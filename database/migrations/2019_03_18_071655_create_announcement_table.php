@@ -18,6 +18,11 @@ class CreateAnnouncementTable extends Migration
             $table->text('message');
             $table->timestamps();
         });
+
+        DB::table('announcement')->insert([
+            'id' => 1,
+            'message' => 'Update your announcement message from Setup --> Announcement',
+        ]);
     }
 
     /**
