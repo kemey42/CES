@@ -1,5 +1,7 @@
 <?php
 
+Auth::routes();
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,7 +20,7 @@ Route::get('/', function () {
 
 /* 
 |--------------------------------------------------------------------------
-| Controller after user logged in 
+|Example
 */
 
 Route::get('/dashboard', function () {
@@ -29,3 +31,5 @@ Route::get('/coach', 'CoachesController@index');
 Route::get('/coach/{id}/{name}', 'CoachesController@student');
 
 Route::get('/class', 'ClassesController@index');
+
+Route::get('/home', 'HomeController@index')->name('home');
