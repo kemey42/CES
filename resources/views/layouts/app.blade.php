@@ -27,6 +27,8 @@
         <main class="container py-4">
             @include('inc.messages')
             @yield('content')
+            <br/><br/>
+            <p class="text-center"><small><a href="http://malco.xyz" class="text-muted">Malco Software <?php echo date("Y"); ?></a></small></p>
         </main>
     </div>
 
