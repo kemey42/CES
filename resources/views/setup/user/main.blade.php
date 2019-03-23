@@ -10,18 +10,19 @@
 <div class="form-group">
 <div class="row justify-content-center">
     <div class="col-md-3 mb-3">
-        <label for="name">Name</label>
-        {{Form::text("name", old("name") ? old("name") : (!empty($request) ? $request['name'] : null), [ "class" => "form-control"] )}}
+        {{Form::text("name", old("name") ? old("name") : (!empty($_GET['filter']['name']) ? $_GET['filter']['name'] : null), 
+        [ "class" => "form-control", "placeholder" => "Name"] )}}
     </div>
     <div class="col-md-3 mb-3">
-        <label for="email">Email</label>
-        {{Form::text("email", old("email") ? old("email") : (!empty($request) ? $request['email'] : null), [ "class" => "form-control" ] )}}
+        {{Form::text("email", old("email") ? old("email") : (!empty($_GET['filter']['email']) ? $_GET['filter']['email'] : null), 
+        [ "class" => "form-control", "placeholder" => "Email Address" ] )}}
+    </div>
+    <div class="col-md-1 mb-1">
+        {{Form::submit('Search', ['class' => 'btn btn-primary'])}} 
     </div>
 </div>
-<div class="row justify-content-center">
-{{Form::submit('Search', ['class' => 'btn btn-primary'])}} {!! Form::close() !!}
 </div>
-</div>
+{!! Form::close() !!}
 
 <div class="row justify-content-center">
     <div class="col-md-12">

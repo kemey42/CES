@@ -18,16 +18,12 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        //$users = User::paginate(30);
-        //return dd($users);
-
-        $testeq = '';
 
         $users = QueryBuilder::for(User::class)
             ->allowedFilters('name', 'email')
             ->paginate(30);
 
-        return view('setup.user.main', compact('users'));
+        return view('setup.user.main', compact('users','request'));
     }
 
     /**
