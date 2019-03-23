@@ -1,6 +1,23 @@
-@extends('layouts.app')
-
+@extends('layouts.app') 
 @section('content')
-<h1>Class (Dashboard)</h1>
-<p>This is class main page.</p>
-@endsection 
+
+<h2>Class</h2>
+
+<hr/>
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="card">
+
+            <div class="card-body">
+
+                YELLLLLLO 
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+@endsection

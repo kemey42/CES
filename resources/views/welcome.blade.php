@@ -9,9 +9,10 @@
                     <div class="col-md-6">
                         <h3>Announcement</h3>
                         <hr /> @if($announcement) {!! $announcement->message !!}
-                        <br/>
+                        <br/> @if(empty($announcement->updated_at))
+                        <span></span> @else
                         <p>Announcement Date: {{$announcement->updated_at->format('d M Y')}}</p>
-                        @else
+                        @endif @else
                         <p>No new announcement</p>
                         @endif
 

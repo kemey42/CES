@@ -23,12 +23,16 @@ class CreatePermissionTables extends Migration
             $table->timestamps();
         });
 
+        DB::statement("ALTER TABLE permissions AUTO_INCREMENT = 6000;");
+
         Schema::create($tableNames['roles'], function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('guard_name');
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE roles AUTO_INCREMENT = 100;");
 
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {
             $table->unsignedInteger('permission_id');

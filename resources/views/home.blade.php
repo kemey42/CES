@@ -1,26 +1,30 @@
 @extends('layouts.app') 
 @section('content')
 
-<div class="jumbotron py-4">
-  <h3>Welcome to Dashboard</h3>
-  <hr/>
-  <span>Full name: {{ Auth::user()->name }}</span><br/>
-  <span>Email address: {{ Auth::user()->email }}</span><br/>
-  <span>Member since: {{ Auth::user()->created_at->format('d M Y') }}</span>
-</div>
+<h2>Welcome {{ Auth::user()->name }}!</h2>
+
+<hr/>
 
 <div class="row justify-content-center">
   <div class="col-md-12">
+
     <div class="card">
       <div class="card-body">
 
-        <h3>Welcome to Dashboard</h3>
-        <br/>
+        {{-- Content tab --}}
 
+        <p>Choose dashboard below:</p>
 
+        <ul class="nav justify-content-center">
+          <li class="nav-item">
+            <a class="nav-link" href="/coach">Personal Coaching Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/class">Class Dashboard</a>
+          </li>
+        </ul>
 
-
-      </div>
+        {{-- End content tab --}} </div>
     </div>
   </div>
 </div>
