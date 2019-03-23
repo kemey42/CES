@@ -45,6 +45,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 */
 
 Route::get('/user', 'UserController@index')->middleware('role:admin');
+//Route::post('/user', 'UserController@filter');
 
 Route::resource('Announcement', 'AnnouncementsController')->only([
     'edit', 'update'

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Spatie\Permission\Models\Role;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -16,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('setup.user.main');
+        $users = User::paginate(30);
+        //return dd($users);
+        return view('setup.user.main',compact('users'));
     }
 
     /**
@@ -26,8 +27,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles= Role::all();
-        return view('setup.user.create',compact('roles'));
+        //
     }
 
     /**
@@ -49,7 +49,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('setup.user.edit')->with('user', $user);
     }
 
     /**
