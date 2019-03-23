@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Support\Facades\URL;
+
 
 
 class UserController extends Controller
@@ -13,11 +16,34 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(30);
+        //$users = User::paginate(30);
         //return dd($users);
-        return view('setup.user.main',compact('users'));
+
+        $testeq = '';
+
+        $users = QueryBuilder::for(User::class)
+            ->allowedFilters('name', 'email')
+            ->paginate(30);
+
+        return view('setup.user.main', compact('users'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function filter(Request $request)
+    {
+        $url = URL::action('UserController@index', 
+        ['filter' => [
+            'name' => $request['name'], 
+            'email' => $request['email']
+        ]]);
+        return redirect($url);
     }
 
     /**

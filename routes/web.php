@@ -38,14 +38,13 @@ Route::get('/class', 'ClassesController@index');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
 /* 
 |--------------------------------------------------------------------------
 |Setup screen
 */
 
-Route::get('/user', 'UserController@index')->middleware('role:admin');
-//Route::post('/user', 'UserController@filter');
+Route::get('/user', 'UserController@index')->name('user');
+Route::post('/user', 'UserController@filter')->name('user');
 
 Route::resource('Announcement', 'AnnouncementsController')->only([
     'edit', 'update'
@@ -55,7 +54,7 @@ Route::resource('Announcement', 'AnnouncementsController')->only([
 /* 
 |--------------------------------------------------------------------------
 |Authentication
-|No longer using Auth::routes();
+|No longer using Auth::routes(); for better understanding of the framework
 */
 
 // Authentication Routes...

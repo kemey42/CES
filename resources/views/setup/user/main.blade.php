@@ -6,6 +6,22 @@
 
 <hr/>
 
+{!! Form::open(['action' => ['UserController@filter'], 'method' => 'POST']) !!}
+<div class="form-group">
+<div class="row justify-content-center">
+    <div class="col-md-3 mb-3">
+        <label for="name">Name</label>
+        {{Form::text("name", old("name") ? old("name") : (!empty($request) ? $request['name'] : null), [ "class" => "form-control"] )}}
+    </div>
+    <div class="col-md-3 mb-3">
+        <label for="email">Email</label>
+        {{Form::text("email", old("email") ? old("email") : (!empty($request) ? $request['email'] : null), [ "class" => "form-control" ] )}}
+    </div>
+</div>
+<div class="row justify-content-center">
+{{Form::submit('Search', ['class' => 'btn btn-primary'])}} {!! Form::close() !!}
+</div>
+</div>
 
 <div class="row justify-content-center">
     <div class="col-md-12">
@@ -15,7 +31,7 @@
             </div>
             <div class="card-body">
 
-                {{-- Content --}}
+                {{-- Content --}} 
 
                 <table class="table table-striped table-responsive-lg css-serial">
                     <thead>
@@ -42,16 +58,15 @@
                             <td></td>
                             <td>{{$user->created_at->format('d M Y')}}</td>
                             <td>{{$user->getRoleNames()->implode(', ')}}</td>
-                            <td><a href="#" class="stretched-link">View</a></td>
-                            <td><a href="#" class="stretched-link">Edit</a></td>
-                            <td><a href="#" class="stretched-link">Delete</a></td>
+                            <td><a href="#" class="link">View</a></td>
+                            <td><a href="#" class="link">Edit</a></td>
+                            <td><a href="#" class="link">Delete</a></td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
 
-                {{ $users->links() }}
-                {{-- Content end --}}
+                {{ $users->links() }} {{-- Content end --}}
 
             </div>
         </div>

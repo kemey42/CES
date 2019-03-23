@@ -5,7 +5,7 @@
 
 <hr/> {!! Form::open(['action' => ['AnnouncementsController@update', $announcement], 'method' => 'POST']) !!}
 <div class="form-group">
-    {{Form::label('message', 'Message')}} {{Form::textarea('message', old("message") ? old("message") : (!empty($announcement)
+    {{Form::label('message', 'Message', ['class' => 'col-md-2 control-label'])}} {{Form::textarea('message', old("message") ? old("message") : (!empty($announcement)
     ? $announcement->message : null), ['id' => 'article-ckeditor', 'class' => 'form-control'])}}
 </div>
 {{Form::hidden('_method', 'PUT')}} {{Form::submit('Submit', ['class' => 'btn btn-primary'])}} {!! Form::close() !!}
