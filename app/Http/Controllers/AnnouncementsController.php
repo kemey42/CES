@@ -42,7 +42,7 @@ class AnnouncementsController extends Controller
         $newAnnouncement->message = $request->input('message');
         $newAnnouncement->save();
 
-        return redirect('/')->with('success','Announcement Updated');
+        return redirect('/home')->with('success','Announcement Updated');
     }
 
 
