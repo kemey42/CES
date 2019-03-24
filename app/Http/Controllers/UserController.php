@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\Filter;
 use Illuminate\Support\Facades\URL;
-
+use Spatie\Permission\Models\Role;
 
 
 class UserController extends Controller
@@ -16,14 +17,18 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
+        
+        $rolelist = Role::all()->pluck('name', 'id')->toArray();
 
         $users = QueryBuilder::for(User::class)
-            ->allowedFilters('name', 'email')
-            ->paginate(30);
+            ->allowedFilters([
+                Filter::scope('has_roles'), 'name', 'email'
+            ])
+            ->paginate(15);
 
-        return view('setup.user.main', compact('users','request'));
+        return view('setup.user.main', compact('users', 'rolelist'));
     }
 
     /**
@@ -34,11 +39,14 @@ class UserController extends Controller
      */
     public function filter(Request $request)
     {
-        $url = URL::action('UserController@index', 
-        ['filter' => [
-            'name' => $request['name'], 
-            'email' => $request['email']
-        ]]);
+        $url = URL::action(
+            'UserController@index',
+            ['filter' => [
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'has_roles' => $request['user-role']
+            ]]
+        );
         return redirect($url);
     }
 
