@@ -32,6 +32,7 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/user';
+    protected $default_password;
 
     /**
      * Create a new controller instance.
@@ -42,6 +43,7 @@ class RegisterController extends Controller
     {
         //$this->middleware('guest');
         $this->middleware('auth');
+        $this->default_password = '12345678';
     }
 
     /**
@@ -51,8 +53,10 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
+        $password = $this->default_password;
         $roles = Role::all();
-        return view('auth.register', compact('roles'));
+
+        return view('auth.register', compact('roles','password'));
     }
 
     /**
@@ -64,8 +68,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'fullname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone_number' => ['required', 'numeric', 'digits_between:10,13'],
             //'password' => ['required', 'string', 'min:8', 'confirmed'],
             'user-role' => ['required'],
         ]);
@@ -79,10 +84,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $password = $this->default_password;
+        
         $user = User::create([
-            'name' => $data['name'],
+            'fullname' => $data['fullname'],
             'email' => $data['email'],
-            'password' => Hash::make('12345678'),
+            'phone_number' => $data['phone_number'],
+            'address' => $data['address'],
+            'password' => Hash::make($password),
         ]);
 
         $user->assignRole($data['user-role']);

@@ -10,20 +10,20 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                        <div class="form-group row required">
+                            <label for="fullname" class="control-label col-md-4 col-form-label text-md-right">{{ __('Full Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}"
-                                    required autofocus> @if ($errors->has('name'))
+                                <input id="fullname" type="text" class="form-control{{ $errors->has('fullname') ? ' is-invalid' : '' }}" name="fullname" value="{{ old('fullname') }}"
+                                    required autofocus> @if ($errors->has('fullname'))
                                 <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('fullname') }}</strong>
                                     </span> @endif
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                        <div class="form-group row required">
+                            <label for="email" class="control-label col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}"
@@ -34,8 +34,32 @@
                             </div>
                         </div>
 
+                        <div class="form-group row required">
+                            <label for="phone_number" class="control-label col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="phone_number" type="tel" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" value="{{ old('phone_number') }}"
+                                    required autofocus> @if ($errors->has('phone_number'))
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('phone_number') }}</strong>
+                                    </span> @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="address" class="control-label col-md-4 col-form-label text-md-right">{{ __('Mail Address') }}</label>
+
+                            <div class="col-md-6">
+                                <textarea id="address" rows="3" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}"
+                                        autofocus></textarea> @if ($errors->has('address'))
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('address') }}</strong>
+                                    </span> @endif
+                            </div>
+                        </div>
+
                         {{-- <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <label for="password" class="control-label col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"
@@ -47,15 +71,15 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm" class="control-label col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div> --}}
 
-                        <div class="form-group row">
-                            <label for="user-role" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
+                        <div class="form-group row required">
+                            <label for="user-role" class="control-label col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
 
                             <div class="col-md-6">
                                 <select id="user-role" name="user-role" class="form-control" required>
@@ -67,8 +91,15 @@
                             </div>
                         </div>
 
+                        
+
+                        
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
+                                    <p id="passwordHelpBlock" class="form-text text-muted">
+                                            Password will be defaulted to <?php echo $password ?>
+                                        </p>
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>

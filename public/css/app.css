@@ -10672,3 +10672,8 @@ a.text-dark:focus {
   /* Display the counter */
 }
 
+.form-group.required .control-label:after {
+  content: "*";
+  color: red;
+}
+

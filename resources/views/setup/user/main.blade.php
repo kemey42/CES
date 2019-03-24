@@ -12,13 +12,14 @@
     Search Filter >>
 </a>
 </p>
-<div class="collapse" id="searchForm">
+
+<div class="collapse {{ (!empty($_GET['filter'])) ? 'show' : ''  }}" id="searchForm">
     <div class="card card-body">
         {!! Form::open(['action' => ['UserController@filter'], 'method' => 'POST']) !!}
         <div class="form-group mb-0">
             <div class="row justify-content-center">
                 <div class="col-md-3">
-                    {{Form::text("name", old("name") ? old("name") : (!empty($_GET['filter']['name']) ? $_GET['filter']['name'] : null), [ "class"
+                    {{Form::text("fullname", old("fullname") ? old("fullname") : (!empty($_GET['filter']['fullname']) ? $_GET['filter']['fullname'] : null), [ "class"
                     => "form-control", "placeholder" => "Name"] )}}
                 </div>
                 <div class="col-md-3">
@@ -41,6 +42,15 @@
     </div>
     <br/>
 </div>
+
+@if (!empty($_GET['filter']))
+    <div class="alert alert-primary" role="alert">
+            Showing results for <u>{{(!empty($_GET['filter']['fullname']) ? $_GET['filter']['fullname'] : null)}}</u>
+            <u>{{(!empty($_GET['filter']['email']) ? $_GET['filter']['email'] : null)}}</u>
+            <u>{{(!empty($_GET['filter']['has_roles']) ? $_GET['filter']['has_roles'] : null)}}</u>
+            (Total results: {{ $users->total() }})
+    </div>
+@endif
 
 {{-- End search form --}}
 
@@ -74,11 +84,11 @@
                         <tr>
                             <td scope="row"></td>
                             <td>{{$user->id}}</td>
-                            <td>{{$user->name}}</td>
+                            <td>{{$user->fullname}}</td>
                             <td>{{$user->email}}</td>
-                            <td></td>
+                            <td>{{$user->phone_number}}</td>
                             <td>{{$user->created_at->format('d M Y')}}</td>
-                            <td>{{$user->getRoleNames()->implode(', ')}}</td>
+                            <td>{{(!empty($_GET['filter']['has_roles']) ? $_GET['filter']['has_roles'] : $user->getRoleNames()->implode(', '))}}</td>
                             <td><a href="/user/{{$user->id}}/view" class="link">View</a></td>
                             <td><a href="/user/{{$user->id}}/edit" class="link">Edit</a></td>
                             <td><a href="/user/{{$user->id}}/delete" class="link">Delete</a></td>
@@ -93,4 +103,5 @@
         </div>
     </div>
 </div>
+
 @endsection

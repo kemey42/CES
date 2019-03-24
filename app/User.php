@@ -15,12 +15,19 @@ class User extends Authenticatable
     use HasRoles;
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'fullname', 'email', 'password', 'phone_number', 'address',
     ];
 
     /**
@@ -49,6 +56,7 @@ class User extends Authenticatable
     public function scopeHasRoles(Builder $query, $type): Builder
     {
         return $query->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-            ->where([['role_id', '=', $type], ['model_type', '=', 'App\User']]);
+            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->where([['roles.name', '=', $type], ['model_type', '=', 'App\User']]);
     }
 }

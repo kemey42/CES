@@ -14,9 +14,11 @@ class SuperAdminUserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'Super Admin',
+            'fullname' => 'Super Admin',
             'email' => 'akmalzamel@gmail.com',
             'password' => bcrypt('12345678'),
+            'phone_number' => '01110631160',
+            'address' => null,
             'created_at' => Carbon::now()
         ]);
 
@@ -36,7 +38,7 @@ class SuperAdminUserSeeder extends Seeder
             'password' => bcrypt('12345678'),
         ]);*/
 
-        $user = User::where('name','Super Admin') -> first();
+        $user = User::where('fullname','Super Admin') -> first();
         $user->assignRole('admin'); 
     }
 }

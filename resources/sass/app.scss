@@ -21,3 +21,8 @@
   counter-increment: serial-number;  /* Increment the serial number counter */
   content: counter(serial-number);  /* Display the counter */
 }
+
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}

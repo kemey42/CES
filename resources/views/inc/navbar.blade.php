@@ -52,13 +52,14 @@
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }}
+                        User
                         <span class="caret"></span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" style="min-width: 300px;">
 
                         {{-- <a class="dropdown-item-text"><small>Full name: {{ Auth::user()->name }}</small></a> --}}
+                        <a class="dropdown-item-text"><small>Full Name: {{ Auth::user()->fullname }}</small></a>
                         <a class="dropdown-item-text"><small>Role: {{ Auth::user()->getRoleNames()->implode(', ') }}</small></a>
                         <a class="dropdown-item-text"><small>Email address: {{ Auth::user()->email }}</small></a>
                         <a class="dropdown-item-text"><small>Member since: {{ Auth::user()->created_at->format('d M Y') }}</small></a>

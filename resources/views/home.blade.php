@@ -1,7 +1,7 @@
 @extends('layouts.app') 
 @section('content')
 
-<h2>Welcome {{ Auth::user()->name }}!</h2>
+<h2>Welcome {{ Auth::user()->fullname }}!</h2>
 
 <hr/>
 

@@ -8,6 +8,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\Filter;
 use Illuminate\Support\Facades\URL;
 use Spatie\Permission\Models\Role;
+use DB;
 
 
 class UserController extends Controller
@@ -20,11 +21,12 @@ class UserController extends Controller
     public function index()
     {
         
-        $rolelist = Role::all()->pluck('name', 'id')->toArray();
+        $rolelist = Role::all()->pluck('name','name')->toArray();
 
+        //return QueryBuilder::for(User::class)
         $users = QueryBuilder::for(User::class)
             ->allowedFilters([
-                Filter::scope('has_roles'), 'name', 'email'
+                Filter::scope('has_roles'), 'fullname', 'email'
             ])
             ->paginate(15);
 
@@ -42,7 +44,7 @@ class UserController extends Controller
         $url = URL::action(
             'UserController@index',
             ['filter' => [
-                'name' => $request['name'],
+                'fullname' => $request['fullname'],
                 'email' => $request['email'],
                 'has_roles' => $request['user-role']
             ]]
