@@ -8,7 +8,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\Filter;
 use Illuminate\Support\Facades\URL;
 use Spatie\Permission\Models\Role;
-use DB;
 
 
 class UserController extends Controller
@@ -33,12 +32,7 @@ class UserController extends Controller
         return view('setup.user.main', compact('users', 'rolelist'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function filter(Request $request)
     {
         $url = URL::action(
@@ -81,7 +75,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('setup.user.edit')->with('user', $user);
+        //dd($user);
+        return view('setup.user.show', compact('user'));
     }
 
     /**
@@ -92,7 +87,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $rolelist = Role::all()->pluck('name','id')->toArray();
+        return view('setup.user.edit', compact('user','rolelist'));
     }
 
     /**
@@ -104,7 +100,21 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        //to make sure every field defined below is added
+            $this->validate($request,[
+                'fullname' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
+                'phone_number' => ['required', 'numeric', 'digits_between:10,13'],
+                //'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'user-role' => ['required'],
+        ]);
+
+        $input = $request->except('user-role');
+        $user->fill($input)->save();
+
+        $user->roles()->sync($request['user-role']);
+
+        return redirect('user/'.$user->id)->with('success','User information Updated');
     }
 
     /**

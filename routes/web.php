@@ -45,6 +45,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/user', 'UserController@index')->name('user');
 Route::post('/user', 'UserController@filter')->name('user');
+Route::get('/user/{user}', 'UserController@show')->name('user');
+Route::get('/user/{user}/edit', 'UserController@edit')->name('user');
+Route::put('/user/{user}/edit', 'UserController@update')->name('user');
 
 Route::resource('Announcement', 'AnnouncementsController')->only([
     'edit', 'update'

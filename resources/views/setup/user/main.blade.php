@@ -2,7 +2,6 @@
 @section('content')
 
 <h2>User Setup</h2>
-<a href="/register" class="btn btn-primary">Create New User</a>
 
 <hr/> 
 
@@ -10,7 +9,7 @@
 <p>
     <a class="link" data-toggle="collapse" href="#searchForm" role="button" aria-expanded="false" aria-controls="searchForm">
     Search Filter >>
-</a>
+    </a>
 </p>
 
 <div class="collapse {{ (!empty($_GET['filter'])) ? 'show' : ''  }}" id="searchForm">
@@ -19,8 +18,8 @@
         <div class="form-group mb-0">
             <div class="row justify-content-center">
                 <div class="col-md-3">
-                    {{Form::text("fullname", old("fullname") ? old("fullname") : (!empty($_GET['filter']['fullname']) ? $_GET['filter']['fullname'] : null), [ "class"
-                    => "form-control", "placeholder" => "Name"] )}}
+                    {{Form::text("fullname", old("fullname") ? old("fullname") : (!empty($_GET['filter']['fullname']) ? $_GET['filter']['fullname']
+                    : null), [ "class" => "form-control", "placeholder" => "Name"] )}}
                 </div>
                 <div class="col-md-3">
                     {{Form::text("email", old("email") ? old("email") : (!empty($_GET['filter']['email']) ? $_GET['filter']['email'] : null),
@@ -44,21 +43,19 @@
 </div>
 
 @if (!empty($_GET['filter']))
-    <div class="alert alert-primary" role="alert">
-            Showing results for <u>{{(!empty($_GET['filter']['fullname']) ? $_GET['filter']['fullname'] : null)}}</u>
-            <u>{{(!empty($_GET['filter']['email']) ? $_GET['filter']['email'] : null)}}</u>
-            <u>{{(!empty($_GET['filter']['has_roles']) ? $_GET['filter']['has_roles'] : null)}}</u>
-            (Total results: {{ $users->total() }})
-    </div>
-@endif
-
-{{-- End search form --}}
+<div class="alert alert-primary" role="alert">
+    Showing results for <u>{{(!empty($_GET['filter']['fullname']) ? $_GET['filter']['fullname'] : null)}}</u>
+    <u>{{(!empty($_GET['filter']['email']) ? $_GET['filter']['email'] : null)}}</u>
+    <u>{{(!empty($_GET['filter']['has_roles']) ? $_GET['filter']['has_roles'] : null)}}</u> (Total results: {{ $users->total()
+    }})
+</div>
+@endif {{-- End search form --}}
 
 <div class="row justify-content-center">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                List of all users
+                List of all users <a href="/register" class="float-md-right">Create New User</a>
             </div>
             <div class="card-body">
 
@@ -67,16 +64,16 @@
                 <table class="table table-striped table-responsive-lg css-serial">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">User No.</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Phone Number</th>
-                            <th scope="col">Member since</th>
-                            <th scope="col">Role</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
+                            <th scope="col" style="width: 3%">#</th>
+                            <th scope="col" style="width: 8%">User No.</th>
+                            <th scope="col" style="width: 27%">Name</th>
+                            <th scope="col" style="width: 18%">Email</th>
+                            <th scope="col" style="width: 12%">Phone Number</th>
+                            <th scope="col" style="width: 12%">Member since</th>
+                            <th scope="col" style="width: 5%">Role</th>
+                            <th scope="col" style="width: 5%"></th>
+                            <th scope="col" style="width: 5%"></th>
+                            <th scope="col" style="width: 5%"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,8 +85,9 @@
                             <td>{{$user->email}}</td>
                             <td>{{$user->phone_number}}</td>
                             <td>{{$user->created_at->format('d M Y')}}</td>
-                            <td>{{(!empty($_GET['filter']['has_roles']) ? $_GET['filter']['has_roles'] : $user->getRoleNames()->implode(', '))}}</td>
-                            <td><a href="/user/{{$user->id}}/view" class="link">View</a></td>
+                            <td>{{(!empty($_GET['filter']['has_roles']) ? $_GET['filter']['has_roles'] : $user->getRoleNames()->implode(',
+                                '))}}</td>
+                            <td><a href="/user/{{$user->id}}" class="link">View</a></td>
                             <td><a href="/user/{{$user->id}}/edit" class="link">Edit</a></td>
                             <td><a href="/user/{{$user->id}}/delete" class="link">Delete</a></td>
                         </tr>
@@ -103,5 +101,4 @@
         </div>
     </div>
 </div>
-
 @endsection

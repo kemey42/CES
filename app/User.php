@@ -55,8 +55,9 @@ class User extends Authenticatable
 
     public function scopeHasRoles(Builder $query, $type): Builder
     {
-        return $query->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+        /* return $query->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
             ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-            ->where([['roles.name', '=', $type], ['model_type', '=', 'App\User']]);
+            ->where([['roles.name', '=', $type], ['model_type', '=', 'App\User']]); */
+        return $query->role($type);
     }
 }

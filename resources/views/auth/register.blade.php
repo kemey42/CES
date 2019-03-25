@@ -47,7 +47,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="address" class="control-label col-md-4 col-form-label text-md-right">{{ __('Mail Address') }}</label>
+                            <label for="address" class="control-label col-md-4 col-form-label text-md-right">{{ __('Mailing Address') }}</label>
 
                             <div class="col-md-6">
                                 <textarea id="address" rows="3" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}"
@@ -84,7 +84,7 @@
                             <div class="col-md-6">
                                 <select id="user-role" name="user-role" class="form-control" required>
                                                     @foreach($roles as $role)
-                                                     <option value="{{ $role->id}}">{{ $role->name}}</option>
+                                                     <option value="{{$role->id}}" {{ old('user-role') == $role->id ? 'selected' : '' }}>{{ $role->name}}</option>
                                                     @endforeach
                                                 </select>
 
