@@ -51,15 +51,14 @@ class RolesAndPermissionsSeeder extends Seeder
         $role->givePermissionTo(Permission::all());
 
         $role = Role::create(['name' => 'student'])
-            ->givePermissionTo(['edit checklist', 'schedule session', 'upload resume', 'view user']);
+            ->givePermissionTo(['edit checklist', 'schedule session', 'upload resume']);
 
         $role = Role::create(['name' => 'coach'])
             ->givePermissionTo(['add slot', 'edit slot', 'delete slot',
             'add assignment', 'edit assignment', 'delete assignment',
             'add course', 'edit course', 'delete course',
             'enrol counselee', 'approve session', 'approve resume', 'update status',
-            'view user', 'add user', 'edit user',
+            'view user', 'add user',
             ]);
-   
     }
 }

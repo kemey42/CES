@@ -8,7 +8,10 @@
     <div class="col-md-6 mb-3">
         <div class="card">
                 <div class="card-header">
-                    Information<a href="/user/{{$user->id}}/edit" class="link float-md-right">Edit</a>
+                    Information
+                    @if(auth()->user()->id == $user->id || auth()->user()->can('edit user'))
+                        <a href="/user/{{$user->id}}/edit" class="link float-md-right">Edit</a>
+                    @endif
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Full name: {{$user->fullname}}</li>

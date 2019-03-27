@@ -42,7 +42,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         //$this->middleware('guest');
-        $this->middleware('auth');
+        $this->middleware('permission:add user');
         $this->default_password = '12345678';
     }
 

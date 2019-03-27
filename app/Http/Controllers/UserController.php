@@ -25,7 +25,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        
+        if (!Auth::user()->hasPermissionTo('view user')){
+            return redirect('/home')->with('error','Not allowed to view others profile');
+        }
         $rolelist = Role::all()->pluck('name','name')->toArray();
 
         //return QueryBuilder::for(User::class)
@@ -82,12 +84,11 @@ class UserController extends Controller
     public function show(User $user)
     {
         //dd($user);
-        if(!Auth::user()->hasRole('admin')){
-            if (Auth::id()!=$user->id){
-                return redirect('/home')->with('error','Not allowed to view others profile');
-            }
+        if (Auth::id()==$user->id || Auth::user()->hasPermissionTo('view user')){
+            return view('setup.user.show', compact('user'));
+        } else {
+            return redirect('/home')->with('error','Not allowed to view others profile');
         }
-        return view('setup.user.show', compact('user'));
     }
 
     /**
@@ -98,14 +99,12 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if(!Auth::user()->hasRole('admin')){
-            if (Auth::id()!=$user->id){
-                return redirect('/home')->with('error','Not allowed to edit others profile');
-            }
+        if (Auth::id()==$user->id || Auth::user()->hasPermissionTo('edit user')){
+            $rolelist = Role::all()->pluck('name','id')->toArray();
+            return view('setup.user.edit', compact('user','rolelist'));
+        } else {
+            return redirect('/home')->with('error','Not allowed to edit others profile');
         }
-
-        $rolelist = Role::all()->pluck('name','id')->toArray();
-        return view('setup.user.edit', compact('user','rolelist'));
     }
 
     /**
@@ -117,11 +116,14 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if(!Auth::user()->hasRole('admin')){
-            if (Auth::id()!=$user->id){
-                return redirect('/home')->with('error','Not allowed to edit others profile');
-            }
+        if (Auth::id()!=$user->id && !Auth::user()->hasPermissionTo('edit user')){
+            return redirect('/home')->with('error','Not allowed to edit/save others profile');
         }
+
+        if (Auth::id()!=$user->id && $user->id == '19000'){
+            return redirect('/home')->with('error','Invalid operation. Nak mati ke tukar aku punya profile?');
+        }
+
         //to make sure every field defined below is added
         $this->validate($request,[
             'fullname' => ['required', 'string', 'max:255'],

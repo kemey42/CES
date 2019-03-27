@@ -87,9 +87,23 @@
                             <td>{{$user->created_at->format('d M Y')}}</td>
                             <td>{{(!empty($_GET['filter']['has_roles']) ? $_GET['filter']['has_roles'] : $user->getRoleNames()->implode(',
                                 '))}}</td>
-                            <td><a href="/user/{{$user->id}}" class="link">View</a></td>
-                            <td><a href="/user/{{$user->id}}/edit" class="link">Edit</a></td>
-                            <td><a href="/user/{{$user->id}}/delete" class="link">Delete</a></td>
+                            <td><a 
+                                @can('view user') 
+                                    href="/user/{{$user->id}}" class="link" 
+                                @else
+                                    class="text-muted"
+                                @endcan>View</a></td>
+                            <td><a 
+                                @can('edit user')
+                                    href="/user/{{$user->id}}/edit" class="link"
+                                @else
+                                    class="text-muted"
+                                @endcan>Edit</a></td>
+                            <td><a @can('edit user')
+                                    href="/user/{{$user->id}}/delete" class="link"
+                                @else
+                                    class="text-muted"
+                                @endcan>Delete</a></td>
                         </tr>
                         @endforeach
                     </tbody>
