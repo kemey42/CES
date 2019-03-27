@@ -65,6 +65,7 @@
                         <a class="dropdown-item-text"><small>Member since: {{ Auth::user()->created_at->format('d M Y') }}</small></a>
 
                         <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/user/{{ Auth::user()->id }}">View Profile</a>
                         <a class="dropdown-item" href="/password/change">Change Password</a>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

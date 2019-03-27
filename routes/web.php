@@ -51,7 +51,7 @@ Route::put('/user/{user}/edit', 'UserController@update')->name('user');
 
 Route::resource('Announcement', 'AnnouncementsController')->only([
     'edit', 'update'
-])->middleware('role:admin');
+])->middleware('permission:edit announcement');
 
 
 /* 

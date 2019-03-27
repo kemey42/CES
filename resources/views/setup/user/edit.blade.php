@@ -66,6 +66,7 @@
                     </div>
                 </div>
 
+                @can('edit role')
                 <div class="form-group row required">
                     <label for="user-role" class="control-label col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
                     <div class="col-md-6">
@@ -73,6 +74,8 @@
                                 [ "class" => "form-control required", "placeholder" => "Choose role below: -" ] )}}
                     </div>
                 </div>
+                @endcan
+                
 
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">

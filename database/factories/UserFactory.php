@@ -2,6 +2,7 @@
 
 use App\User;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 use Faker\Generator as Faker;
 
 /*
@@ -17,10 +18,13 @@ use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
+        'fullname' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'remember_token' => Str::random(10),
+        'email_verified_at' => null,
+        'password' => bcrypt('12345678'),
+        'phone_number' => '0123456565',
+        'address' => null,
+        'created_at' => Carbon::now(),
+        'remember_token' => Str::random(10)
     ];
 });

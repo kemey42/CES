@@ -8,10 +8,16 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\Filter;
 use Illuminate\Support\Facades\URL;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:edit user|view user|add user|delete user']);
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -76,6 +82,11 @@ class UserController extends Controller
     public function show(User $user)
     {
         //dd($user);
+        if(!Auth::user()->hasRole('admin')){
+            if (Auth::id()!=$user->id){
+                return redirect('/home')->with('error','Not allowed to view others profile');
+            }
+        }
         return view('setup.user.show', compact('user'));
     }
 
@@ -87,6 +98,12 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        if(!Auth::user()->hasRole('admin')){
+            if (Auth::id()!=$user->id){
+                return redirect('/home')->with('error','Not allowed to edit others profile');
+            }
+        }
+
         $rolelist = Role::all()->pluck('name','id')->toArray();
         return view('setup.user.edit', compact('user','rolelist'));
     }
@@ -100,20 +117,26 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        if(!Auth::user()->hasRole('admin')){
+            if (Auth::id()!=$user->id){
+                return redirect('/home')->with('error','Not allowed to edit others profile');
+            }
+        }
         //to make sure every field defined below is added
-            $this->validate($request,[
-                'fullname' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
-                'phone_number' => ['required', 'numeric', 'digits_between:10,13'],
-                //'password' => ['required', 'string', 'min:8', 'confirmed'],
-                'user-role' => ['required'],
+        $this->validate($request,[
+            'fullname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
+            'phone_number' => ['required', 'numeric', 'digits_between:10,13'],
+            //'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
         $input = $request->except('user-role');
         $user->fill($input)->save();
-
-        $user->roles()->sync($request['user-role']);
-
+        
+        if(Auth::user()->hasPermissionTo('edit role')){
+            $user->roles()->sync($request['user-role']);
+        }
+        
         return redirect('user/'.$user->id)->with('success','User information Updated');
     }
 
