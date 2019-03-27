@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
@@ -54,9 +55,15 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $password = $this->default_password;
-        $roles = Role::all();
-
-        return view('auth.register', compact('roles','password'));
+        if (!Auth::user()->hasRole('admin')){
+            $rolelist = Role::where('id', '101')->pluck('name','id')->toArray();
+            //return dd($rolelist);
+        } else {
+            //return 0;
+            $rolelist = Role::all()->pluck('name','id')->toArray();
+        }
+        
+        return view('auth.register', compact('rolelist','password'));
     }
 
     /**

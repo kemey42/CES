@@ -15,7 +15,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['permission:edit user|view user|add user|delete user']);
+        //$this->middleware(['permission:edit user|view user|add user|delete user']);
     }
     
     /**
